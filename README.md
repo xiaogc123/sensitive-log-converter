@@ -1,7 +1,21 @@
 # 项目名称
 
-本项目是一个用于对日志中的敏感信息进行掩码处理的工具库，支持 `Logback` 和 `Log4j`。通过自定义日志转换器和布局，能够有效地保护日志中的身份证号、银行卡号、手机号等敏感信息，避免泄露风险。
+**简介**：这是一个用于对日志中的敏感信息进行掩码处理的工具库，支持 `Logback` 和 `Log4j`。通过自定义日志转换器和布局，能够有效地保护日志中的身份证号、银行卡号、手机号等敏感信息，避免泄露风险。
 
+## 目录
+
+- [功能特性](#功能特性)
+- [核心类说明](#核心类说明)
+    - [1. `MaskUtils`](#1-maskutils)
+    - [2. `CustomRegexPattern`](#2-customregexpattern)
+    - [3. `SensitiveLogDataConverter` (用于 Logback)](#3-sensitivelogdataconverter-用于-logback)
+    - [4. `MaskingLayout` (用于 Log4j2)](#4-maskinglayout-用于-log4j2)
+- [集成步骤](#集成步骤)
+    - [1. 引入依赖](#1-引入依赖)
+    - [2. 配置 Logback 或 Log4j](#2-配置-logback-或-log4j)
+    - [3. 使用测试](#3-使用测试)
+- [贡献指南](#贡献指南)
+- [许可证](#许可证)
 ## 功能特性
 
 - **支持敏感信息脱敏**：对身份证号、手机号、银行卡号、邮箱、地址、中文姓名等类型的信息进行脱敏处理。
@@ -9,6 +23,7 @@
 - **灵活的正则模式**：通过配置 `CustomRegexPattern` 类定义不同敏感信息的匹配模式和掩码规则。
 
 ## 核心类说明
+
 
 ### 1. `MaskUtils`
 
@@ -20,9 +35,12 @@
 - **示例**：
 
 ```java
-String maskedContent = MaskUtils.maskWithAllPattern("身份证号: 110101199001011234, 手机号: 13658596589");
-System.out.println(maskedContent);
-// 输出: 身份证号: 110101**********34, 手机号: 136****6589
+public static void main(String[] args) {
+     String maskedContent = MaskUtils.maskWithAllPattern("身份证号: 110101199001011234, 手机号: 13658596589");
+    // 输出: 身份证号: 110101**********34, 手机号: 136****6589
+     System.out.println(maskedContent);
+}
+
 ```
 ### 2. `CustomRegexPattern`
 `CustomRegexPattern` 是一个自定义的正则表达式类，用于定义不同敏感信息的匹配模式和掩码规则。
@@ -52,7 +70,7 @@ enum CustomRegexPattern {
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <conversionRule conversionWord="msg" converterClass="com.demo.log.SensitiveLogDataConverter"/>
+    <conversionRule conversionWord="msg" converterClass="com.trhui.log.SensitiveLogDataConverter"/>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
         <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
@@ -139,7 +157,7 @@ public class Log4jTest {
     </dependency>
     <!-- 自定义日志库依赖 -->
     <dependency>
-        <groupId>com.demo.log</groupId>
+        <groupId>com.trhui.log</groupId>
         <artifactId>sensitive-log-converter</artifactId>
         <version>0.0.1</version>
     </dependency>
