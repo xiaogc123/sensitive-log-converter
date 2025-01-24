@@ -90,7 +90,7 @@ public class LogbackTest {
     private static final Logger logger = LoggerFactory.getLogger(LogbackTest.class);
 
     public static void main(String[] args) {
-        logger.info("身份证号: 110101199001011234, 手机号: 13658596589");
+        logger.info("身份证号: 110101199001011234, 手机号: 13611116589");
     }
 }
 ```
